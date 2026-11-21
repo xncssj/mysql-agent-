@@ -1,7 +1,0 @@
-flowchart TD
-    P6["4. 改写验证：EXPLAIN 对比 + 语义等价"] --> P7{"验证通过?"}
-    P7 -->|"是"| Output["输出：改写后 SQL + 改写说明 + 预期收益"]
-    P7 -->|"否"| P8["回滚到原始 SQL，记录失败原因"]
-
-    style Output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    style P8 fill:#ffebee,stroke:#c62828,stroke-width:2px

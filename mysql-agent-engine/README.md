@@ -63,6 +63,6 @@ src/mysql_agent/
   eval/            # Golden set runner
 ```
 
-## Column Docs
+## Repository
 
-See the column docs at the repository root (`../`).
+See the repository root README (`../README.md`) for the full code and case layout.

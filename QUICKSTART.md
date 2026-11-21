@@ -1,6 +1,6 @@
-# MySQL Agent 专栏 — 5 分钟快速开始
+# MySQL Agent — 5 分钟快速开始
 
-> 代码仓库：`mysql-agent-engine/`（与专栏同 monorepo）
+> 代码仓库：`mysql-agent-engine/`（本仓库只放代码与案例，正文见微信公众号）
 
 ## 1. 安装
 
@@ -80,6 +80,6 @@ python3.10 -m mysql_agent.cli chat \
 
 ## 8. 下一步阅读
 
-- [附录-端到端故障剧本](附录-端到端故障剧本.md) — 10 个生产场景
-- [附录-安全与权限指南](附录-安全与权限指南.md) — 上线前必读
-- [附录-文章代码评测对照表](附录-文章代码评测对照表.md) — 文章 vs 代码
+- [eval/L2-L5-评测指南.md](eval/L2-L5-评测指南.md) — 五层评测落地
+- [eval/e2e_manual_cases.jsonl](eval/e2e_manual_cases.jsonl) — 50 条端到端用例
+- [mysql-agent-engine/docs/LAB.md](mysql-agent-engine/docs/LAB.md) — 本地只读 Lab 验证

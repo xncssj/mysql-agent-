@@ -1,6 +1,0 @@
-flowchart TD
-    T1["事务1：持有 orders(100)，等待 inventory(50)"] -->|"环路"| T2["事务2：持有 inventory(50)，等待 orders(100)"]
-    T2 -->|"环路"| T1
-
-    style T1 fill:#ffebee,stroke:#c62828
-    style T2 fill:#ffebee,stroke:#c62828

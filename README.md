@@ -1,71 +1,30 @@
-# 《大模型驱动的 MySQL 性能分析与自动化运维实战》
+# MySQL Agent：配套代码与案例
 
-一套可运行的 MySQL 性能诊断 Agent 专栏：20 讲正文 + 完整引擎源码 + Prompt 模板 + 评测集 + 知识图谱与向量索引资产。
+《大模型驱动的 MySQL 性能分析与自动化运维实战》专栏的公开代码与案例库。
 
-把 MySQL 性能诊断从「人 + 经验」升级为「知识 + 规则 + Agent + 评测」的可工程化系统。
+本仓库**只放可运行代码与案例资产**，不收录专栏正文；20 讲正文在微信公众号发布。仓库内的引擎、Prompt、评测集与 fixtures 均可独立运行，数据已完成脱敏。
 
-## 这套东西能做什么
+## 内容一览
 
-| 传统 DBA 诊断 | MySQL Agent 诊断 |
-|---|---|
-| 翻文档、搜博客、靠经验 | 知识库 RAG + 规则引擎 + LLM |
-| 单条 SQL 或实例指标割裂看 | SQL 级 ↔ 实例级自动路由与联动 |
-| 结论不可复现、难评测 | Golden Set 回放 + CI 回归 |
-| 故障复盘 2-4 小时 | 5-10 分钟结构化报告 |
+| 目录 | 内容 |
+|------|------|
+| [`mysql-agent-engine/`](mysql-agent-engine/) | 引擎源码：知识库/RAG、Hybrid Search、NL2SQL、EXPLAIN、索引诊断、SQL 改写、指标异常检测、根因推理、死锁/复制诊断、Orchestrator + ReAct、报告生成、评测 |
+| [`data/`](data/) | 向量索引 chunks（1303 条）与 Phase 1 知识图谱 JSON |
+| [`eval/`](eval/) | Golden Set、RAG 问答集、E2E 用例、fixtures、JSON Schema 与评测指南 |
+| [`prompts/`](prompts/) | System / Task / Few-shot Prompt 模板与实验记录 |
+| [`notebooks/`](notebooks/) | 实验 Notebook 导航与最小入口 |
+| [`QUICKSTART.md`](QUICKSTART.md) | 5 分钟快速开始 |
 
-## 四层架构
+## 能力范围
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│ Layer 4: 工程化与落地（第 17-20 讲）                              │
-│ Orchestrator / Eval / 知识积累 / 生产部署                        │
-├─────────────────────────────────────────────────────────────────┤
-│ Layer 3: 诊断 Agent（第 5-16 讲）                                 │
-│ NL2SQL / EXPLAIN / Index / Rewrite / Metrics / RootCause / ...  │
-├─────────────────────────────────────────────────────────────────┤
-│ Layer 2: 知识与 Prompt（第 1-4 讲 + 第 16 讲）                    │
-│ 向量索引 / Hybrid Search / Prompt 模板 / RAG 上下文              │
-├─────────────────────────────────────────────────────────────────┤
-│ Layer 1: 数据与规则（贯穿全专栏）                                 │
-│ 18 根因 + 14 交叉 + R/I/W/RP 规则 + Golden Set                  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-## 20 讲目录
-
-**模块一：知识体系构建与 Agent 基础（1-4 讲）**
-
-1. 专栏概览与知识库构建 — 向量知识库（切片/FAISS）+ Phase 1 轻量知识图谱
-2. Hybrid Search 检索优化 — BM25 + Dense 融合，可选 Cross-Encoder 重排序
-3. Prompt 基础与模板设计 — System Role、Task Template、基础组装器
-4. RAG 集成与上下文构建 — 检索结果注入 Prompt、上下文质量优化
-
-**模块二：SQL 智能分析 Agent（5-8 讲）**
-
-5. NL2SQL / Text-to-SQL 落地
-6. 执行计划自动解读 Agent
-7. 索引诊断与推荐 Agent
-8. SQL 改写优化 Agent
-
-**模块三：实例级性能诊断 Agent（9-13 讲）**
-
-9. 从 SQL 级到实例级诊断 — 诊断层级模型、Agent 路由决策
-10. 指标采集与异常检测 — Prometheus + MK/CUSUM/MAD
-11. 根因因果图与反向推导 — RC01–RC18、证据路径排序
-12. 多维度关联诊断 — 14 种交叉模式
-13. 故障复盘报告自动生成
-
-**模块四：高级场景与工程化（14-20 讲）**
-
-14. 死锁自动分析与解锁建议
-15. 主备切换/复制延迟智能诊断
-16. Prompt 高级技巧与动态优化
-17. Agent 编排与工程化落地
-18. 评测体系与持续迭代
-19. 智能化运维与知识积累
-20. 部署与生产落地
-
-完整索引与进度见 [目录.md](目录.md)，依赖关系与阅读路径见 [全书导读](00-全书导读与架构总览.md)。
+- 向量知识库 + Hybrid Search（Dense FAISS + BM25）
+- RAG 知识问答（可选 OpenAI 合成）
+- 规则 Agent：EXPLAIN、索引推荐、SQL 改写、根因推理、多维交叉
+- NL2SQL（模板 + Schema Linking）
+- Prometheus 指标采集 + 异常检测（MK / CUSUM / MAD）
+- Orchestrator 状态机 + ReAct 循环
+- 死锁解析、主备复制延迟诊断、故障复盘报告
+- Golden Set 评测与 L5 回归基线
 
 ## 快速开始
 
@@ -76,6 +35,11 @@ python3.10 -m pytest -q
 
 # EXPLAIN 诊断
 python3.10 -m mysql_agent.cli explain --sql "SELECT * FROM orders WHERE status=1"
+
+# 索引建议
+python3.10 -m mysql_agent.cli index \
+  --sql "SELECT * FROM orders WHERE status=1 ORDER BY created_at DESC" \
+  --table orders
 
 # ReAct 编排：SQL 优化
 python3.10 -m mysql_agent.cli chat \
@@ -89,24 +53,6 @@ python3.10 -m mysql_agent.cli chat \
 ```
 
 更多命令、Golden Set 评测与 OpenAI 接入见 [QUICKSTART.md](QUICKSTART.md)。
-
-## 仓库结构
-
-```
-.
-├── 00-全书导读与架构总览.md
-├── 01-知识库构建/ … 20-部署与生产落地/   # 20 讲正文
-├── mysql-agent-engine/                   # 引擎源码、测试、配置与 Docker 部署
-├── data/                                 # 向量索引 chunks、知识图谱 JSON
-├── eval/                                 # Golden Set、RAG 评测集、fixtures、Schema
-├── prompts/                              # System / Task / Few-shot Prompt 模板
-├── notebooks/                            # 实验 Notebook 导航
-├── assets/                               # 架构图与 Mermaid 导出图
-├── tools/                                # 发布产物与图形生成脚本
-├── QUICKSTART.md
-├── 目录.md
-└── 附录-*.md                             # 规则速查、安全指南、故障剧本、文章代码对照
-```
 
 ## 评测
 
@@ -125,12 +71,13 @@ python3.10 -m mysql_agent.cli chat \
 - Python 3.10+
 - MySQL 8.0（本地 Lab 可用 `docker compose --profile lab`）
 - 可选：Prometheus、Neo4j、OpenAI API Key（不配置时走离线规则与 heuristic 链路）
+- 向量索引二进制（`faiss_index.bin`、`tfidf_pipeline.pkl`、`st_model/`）不入库，可由 `data/vector_index/chunks.jsonl` 重建；重建入口见 `mysql-agent-engine/scripts/build_index.py`，未构建时相关测试自动跳过
 
 ## 安全与合规
 
 - 仓库内数据库账号、密码均为本地 Demo 值，请勿用于生产。
-- 生产环境请使用只读账号，并遵循 [附录-安全与权限指南.md](附录-安全与权限指南.md)。
-- 向量索引基于公开技术资料构建；请勿将无授权的付费内容上传至本仓库或任何公开仓库。
+- 生产环境请使用只读账号，并遵循 `mysql-agent-engine/docs/LAB.md` 的只读验证流程。
+- 请勿将无授权的付费内容上传至本仓库或任何公开仓库。
 
 ## 许可
 

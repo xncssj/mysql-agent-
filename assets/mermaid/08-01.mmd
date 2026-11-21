@@ -1,8 +1,0 @@
-flowchart TD
-    Input["输入：原始 SQL + EXPLAIN 诊断 + 索引建议"] --> P1["1. SQL 解析（sqlparse / sqlglot）"]
-    P1 --> P2["2. 改写规则引擎（15 条确定性规则）"]
-    P2 --> P3{"规则命中?"}
-    P3 -->|"是"| P4["3a. 规则改写（可回放、可评测）"]
-    P3 -->|"否"| P5["3b. LLM 辅助改写（复杂场景兜底）"]
-
-    style Input fill:#e1f5fe,stroke:#01579b,stroke-width:2px
