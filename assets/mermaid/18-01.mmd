@@ -1,0 +1,16 @@
+flowchart LR
+    subgraph P1["① 输入与回放"]
+        direction TB
+        GS["Golden Set：JSONL 文件<br/>SQL/索引/根因/死锁/复制"] --> ER["EvalRunner<br/>逐条回放 Agent"]
+    end
+    subgraph P2["② 对比与报告"]
+        direction TB
+        COMP["对比期望输出<br/>_compare()"] --> MC["MetricsCalculator<br/>准确率/召回率/F1/延迟"]
+        MC --> REPORT["评测报告 + 回归告警"]
+    end
+    P1 --> P2
+
+    style GS fill:#e8f5e9,stroke:#2e7d32
+    style ER fill:#fff8e1,stroke:#f57f17
+    style MC fill:#e3f2fd,stroke:#1565c0
+    style REPORT fill:#fce4ec,stroke:#c62828

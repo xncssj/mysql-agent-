@@ -1,0 +1,26 @@
+flowchart TD
+    INNODB["SHOW ENGINE<br/>INNODB STATUS"]:::input
+
+    INNODB --> P["DeadlockParser<br/>结构化解析"]
+
+    P --> A["DeadlockAnalyzer<br/>死锁分类"]
+    A --> C1["加锁顺序不一致"]
+    A --> C2["间隙锁冲突"]
+    A --> C3["唯一键冲突"]
+    A --> C4["热点行竞争"]
+
+    A --> R["RAG + LLM<br/>知识匹配 + 生成建议"]
+
+    C1 --> R
+    C2 --> R
+    C3 --> R
+    C4 --> R
+
+    R --> OUT["结构化死锁报告<br/>+ 优化建议"]:::output
+
+    classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+
+    style P fill:#e3f2fd,stroke:#1565c0
+    style A fill:#fff8e1,stroke:#f57f17
+    style R fill:#fce4ec,stroke:#c2185b

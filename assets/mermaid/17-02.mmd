@@ -1,0 +1,33 @@
+flowchart TD
+    subgraph 用户层
+        USER["用户 Query"]
+    end
+
+    USER --> ORCH["Orchestrator<br/>ReAct 循环"]
+
+    ORCH --> TR["ToolRegistry<br/>工具注册表"]
+
+    subgraph Agent 层
+        SQL["SQL Agents<br/>NL2SQL/Explain/Index/Rewrite"]
+        INST["Instance Agents<br/>Metrics/RootCause/CrossCorr"]
+        ADV["Advanced Agents<br/>Deadlock/Replication/Report"]
+    end
+
+    subgraph 工具层
+        EXPLAIN["EXPLAIN"]
+        STATUS["SHOW STATUS"]
+        SYS["sys schema"]
+        PT["pt-query-digest"]
+    end
+
+    TR --> SQL
+    TR --> INST
+    TR --> ADV
+
+    SQL --> EXPLAIN
+    INST --> STATUS
+    INST --> SYS
+    ADV --> PT
+
+    style ORCH fill:#fff8e1,stroke:#f57f17
+    style TR fill:#e3f2fd,stroke:#1565c0

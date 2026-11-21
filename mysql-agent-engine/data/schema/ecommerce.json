@@ -1,0 +1,26 @@
+{
+  "database": "ecommerce",
+  "tables": [
+    {
+      "name": "orders",
+      "comment": "订单主表",
+      "synonyms": ["订单", "order"],
+      "columns": [
+        {"name": "order_id", "comment": "订单ID"},
+        {"name": "merchant_id", "comment": "商家ID"},
+        {"name": "created_at", "comment": "创建时间", "synonyms": ["下单时间"]},
+        {"name": "status", "comment": "订单状态"},
+        {"name": "total_amount", "comment": "订单总金额", "synonyms": ["销售额", "金额"]}
+      ]
+    },
+    {
+      "name": "merchants",
+      "comment": "商家表",
+      "synonyms": ["商家", "店铺"],
+      "columns": [
+        {"name": "merchant_id", "comment": "商家ID"},
+        {"name": "name", "comment": "商家名称", "synonyms": ["店铺名"]}
+      ]
+    }
+  ]
+}

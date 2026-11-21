@@ -1,0 +1,17 @@
+graph LR
+    Parameter["Parameter<br/>参数"] -->|affects| Symptom1["Symptom<br/>症状"]
+    Symptom2["Symptom<br/>症状"] -->|caused_by| Concept["Concept<br/>概念"]
+    Command["Command<br/>命令"] -->|diagnoses| Symptom3["Symptom<br/>症状"]
+    Rule["Rule<br/>规则"] -->|triggers_on| Symptom4["Symptom<br/>症状"]
+    Case["Case<br/>案例"] -->|demonstrates| Rule2["Rule<br/>规则"]
+
+    style Parameter fill:#e3f2fd,stroke:#1565c0
+    style Concept fill:#e8f5e9,stroke:#2e7d32
+    style Command fill:#fff3e0,stroke:#ef6c00
+    style Rule fill:#fce4ec,stroke:#c2185b
+    style Rule2 fill:#fce4ec,stroke:#c2185b
+    style Case fill:#f3e5f5,stroke:#7b1fa2
+    style Symptom1 fill:#ffebee,stroke:#c62828
+    style Symptom2 fill:#ffebee,stroke:#c62828
+    style Symptom3 fill:#ffebee,stroke:#c62828
+    style Symptom4 fill:#ffebee,stroke:#c62828

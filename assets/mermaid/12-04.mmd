@@ -1,0 +1,26 @@
+graph LR
+    subgraph 14:00 基线
+        C1["连接数 45%"]:::normal
+        L1["锁等待 50ms"]:::normal
+        Q1["QPS 12000"]:::normal
+    end
+
+    subgraph 14:15 异常上升
+        C2["连接数 72%"]:::warn
+        L2["锁等待 800ms"]:::warn
+        Q2["QPS 8000"]:::warn
+    end
+
+    subgraph 14:30 严重告警
+        C3["连接数 91%"]:::critical
+        L3["锁等待 2300ms"]:::critical
+        Q3["QPS 4500"]:::critical
+    end
+
+    C1 --> C2 --> C3
+    L1 --> L2 --> L3
+    Q1 --> Q2 --> Q3
+
+    classDef normal fill:#e8f5e9,stroke:#2e7d32
+    classDef warn fill:#fff8e1,stroke:#f57f17
+    classDef critical fill:#ffebee,stroke:#c62828

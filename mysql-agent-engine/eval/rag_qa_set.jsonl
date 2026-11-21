@@ -1,0 +1,20 @@
+{"query": "MySQL 死锁如何排查", "relevant_doc_ids": ["dfd3bbd817a0", "a3aa0173eb9d", "8ac0de25c101", "7eb2ac58516c"], "source_contains": ["死锁", "innodb", "lock"]}
+{"query": "innodb_buffer_pool_size 推荐设置", "relevant_doc_ids": ["8e25e0b1c171", "998d4490e0a7", "004af73f994d"], "source_contains": ["buffer", "pool"]}
+{"query": "ERROR 1205 Lock wait timeout", "relevant_doc_ids": ["7eb2ac58516c", "7c1d6a845f89", "8ac0de25c101"], "source_contains": ["lock", "timeout"]}
+{"query": "为什么索引失效了", "relevant_doc_ids": ["ecc2a2fa7d02", "6da2bfc48a16", "1d8a511cc98a"], "source_contains": ["索引", "失效"]}
+{"query": "慢查询怎么优化", "relevant_doc_ids": ["9effee672c59", "28bb64206fc6", "e5da9fb3cb9f"], "source_contains": ["慢查询", "优化"]}
+{"query": "事务隔离级别 RR 和 RC 区别", "relevant_doc_ids": ["e4191378e6f1", "75153bf8da3b", "089179667f40"], "source_contains": ["隔离", "RR"]}
+{"query": "redo log 和 binlog 两阶段提交", "relevant_doc_ids": ["6cae9a2f2b56", "0ee8faa56306", "bd61a71891c3"], "source_contains": ["redo", "binlog"]}
+{"query": "主从复制延迟怎么排查", "relevant_doc_ids": ["c4acbab61409", "f54fe07640c6", "17cc641da3d2"], "source_contains": ["复制", "延迟"]}
+{"query": "什么是覆盖索引", "relevant_doc_ids": ["d67a99209cc9", "81de5172af85", "d4452bca9ef9"], "source_contains": ["覆盖索引"]}
+{"query": "临时表落到磁盘怎么办", "relevant_doc_ids": ["8196fb9b901d", "40dad5c313f1", "21f96ffcef09"], "source_contains": ["临时表"]}
+{"query": "连接数打满怎么处理", "relevant_doc_ids": ["499d54c6b884", "d4ed81fc7e11", "4aefef44fd88"], "source_contains": ["连接"]}
+{"query": "MVCC 是怎么实现的", "relevant_doc_ids": ["3b8fd318a4a0", "4b5d5dd3595a", "b01705827053"], "source_contains": ["MVCC"]}
+{"query": "ORDER BY 为什么用 filesort", "relevant_doc_ids": ["16ff389d2d2d", "731227b8d2b3", "1a2611666be7"], "source_contains": ["filesort"]}
+{"query": "JOIN 怎么优化", "relevant_doc_ids": ["10d82db621f4", "b4abe67183a1", "ee0ae2b601b6"], "source_contains": ["JOIN"]}
+{"query": "要不要用分区表", "relevant_doc_ids": ["77dcdc59f202", "0f3a5acb4274", "3581a897b604"], "source_contains": ["分区"]}
+{"query": "GTID 复制切换注意什么", "relevant_doc_ids": ["6c65d556abe6", "42f7807911ca", "dbf77ddac301"], "source_contains": ["GTID"]}
+{"query": "误删数据怎么恢复", "relevant_doc_ids": ["d08cf0c81508", "cd95948deb11", "6e2427869158"], "source_contains": ["恢复"]}
+{"query": "隐式转换导致索引失效", "relevant_doc_ids": ["3b2a70601593", "724c8ec040f5", "d6bbf3ed8913"], "source_contains": ["隐式", "索引"]}
+{"query": "脏页过多导致抖动", "relevant_doc_ids": ["db1bf6e5108a", "48e5e5e70c88", "7487ba17f592"], "source_contains": ["脏页"]}
+{"query": "选错索引怎么办", "relevant_doc_ids": ["9effee672c59", "28bb64206fc6", "e5da9fb3cb9f"], "source_contains": ["索引"]}

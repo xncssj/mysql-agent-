@@ -1,0 +1,35 @@
+flowchart LR
+    subgraph CRITICAL["🔴 CRITICAL（必须处理）"]
+        direction TB
+        R001["R001 全表扫描大表<br/>type=ALL AND rows>10000"]
+        R002["R002 文件排序<br/>Using filesort"]
+        R003["R003 临时表<br/>Using temporary"]
+        R009["R009 隐式类型转换<br/>字符串列与数字比较"]
+        R010["R010 函数导致索引失效<br/>列被函数包裹"]
+    end
+    subgraph WARNING["🟡 WARNING（建议优化）"]
+        direction TB
+        R004["R004 索引未使用<br/>possible_keys 非空但 key 为空"]
+        R005["R005 低效索引合并<br/>type=index_merge"]
+        R007["R007 大偏移量分页<br/>LIMIT offset>10000"]
+        R014["R014 反向索引扫描"]
+        R015["R015 选择性差<br/>key 存在但 rows 仍很大"]
+        R016["R016 多表关联过多<br/>JOIN 表数>5"]
+        R017["R017 子查询未优化<br/>相关子查询"]
+        R018["R018 不合理 LIMIT<br/>LIMIT 大但无 ORDER BY"]
+    end
+    subgraph INFO["🟢 INFO（参考信息）"]
+        direction TB
+        R008["R008 覆盖索引<br/>Using index 且无 Using where"]
+        R011["R011 索引条件下推<br/>Using index condition"]
+        R012["R012 常量表<br/>type=const/system"]
+        R013["R013 范围扫描<br/>type=range"]
+    end
+    CRITICAL ==> ExplainCheck["EXPLAIN 解析"]
+    WARNING ==> ExplainCheck
+    INFO ==> ExplainCheck
+
+    style CRITICAL fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style WARNING fill:#fff8e1,stroke:#f9a825,stroke-width:2px
+    style INFO fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style ExplainCheck fill:#e3f2fd,stroke:#1565c0,stroke-width:2px

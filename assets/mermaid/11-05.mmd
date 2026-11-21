@@ -1,0 +1,15 @@
+flowchart LR
+    subgraph P1["① 定位与诊断"]
+        direction TB
+        RC["RC07 大事务（实例层）"] --> Fetch["拉取 Top 慢 SQL<br/>performance_schema"]
+        Fetch --> Exp["ExplainAgent 诊断<br/>R001 全表扫描？<br/>是 → IndexAgent；否 → 直接改写"]
+    end
+    subgraph P2["② 索引与改写"]
+        direction TB
+        Idx["IndexAgent 诊断<br/>I001 缺失索引？"] --> Rew["SQLRewriter<br/>是 → 子查询改 JOIN<br/>否 → 改写低效写法"]
+        Rew --> Output["完整优化方案"]
+    end
+    P1 ==> P2
+
+    style RC fill:#ffebee,stroke:#c62828
+    style Output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

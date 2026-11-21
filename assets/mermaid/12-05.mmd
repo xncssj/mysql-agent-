@@ -1,0 +1,11 @@
+flowchart TD
+    CC1["CC01 连接×锁"] --> RC2["RC02 锁等待"]
+    CC6["CC06 锁×慢查询"] --> RC7["RC07 大事务"]
+
+    RC2 -->|"score=0.6"| RANK1{根因排序}
+    RC7 -->|"score=0.9 + 0.3=1.2"| RANK1
+
+    RANK1 -->|"Top-1"| CONFIRM[RC07 大事务]
+
+    style RC7 fill:#ffcdd2,stroke:#c62828
+    style CONFIRM fill:#ffebee,stroke:#c62828,stroke-width:2px

@@ -1,0 +1,19 @@
+flowchart TD
+    A["生产故障/误报"] --> B["1. 记录到 audit_log\n现象 + Agent 输出 + 人工结论"]
+    B --> C["2. 转化为 Golden Set case\neval/golden_set.jsonl"]
+    C --> D["3. 分析失败类型"]
+    D --> E["规则漏判\n补充 R/I/W/RC/CC 规则"]
+    D --> F["检索未命中\n优化 chunk / Hybrid Search"]
+    D --> G["Prompt 格式错\n更新 prompts/tasks/*.yaml"]
+    D --> H["LLM 幻觉\n加强 RAG 约束 / 降低 temperature"]
+    E --> I["4. 跑 eval/run_all.py\n对比 baseline"]
+    F --> I
+    G --> I
+    H --> I
+    I --> J{"5. 有回归?"}
+    J -->|"否"| K["merge + 更新 baseline_report.json"]
+    J -->|"是"| L["回滚 + 定向修复"]
+
+    style A fill:#ffebee,stroke:#c62828
+    style K fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style L fill:#fff3e0,stroke:#ef6c00

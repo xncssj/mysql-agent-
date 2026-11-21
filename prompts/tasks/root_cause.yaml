@@ -1,0 +1,29 @@
+name: root_cause
+version: "1.0"
+description: |
+  基于异常指标与 RC01-RC18 因果边，反向推导根因排序，并给出证据与下一步工具建议。
+
+cot_steps:
+  - "汇总异常指标与级别"
+  - "在 RC01-RC18 因果图上反向推导"
+  - "按置信度排序根因"
+  - "关联交叉判断 CC 与处置建议"
+  - "输出 JSON 根因报告"
+
+output_schema:
+  type: object
+  required: [root_causes, summary]
+  properties:
+    root_causes:
+      type: array
+      items:
+        type: object
+        properties:
+          rc_id: {type: string}
+          score: {type: number}
+          evidence: {type: string}
+          suggestion: {type: string}
+    summary: {type: string}
+    next_agents:
+      type: array
+      items: {type: string}

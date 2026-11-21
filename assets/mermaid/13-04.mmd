@@ -1,0 +1,13 @@
+flowchart LR
+    subgraph P1["① 锁等待"]
+        direction TB
+        SQL["批量 UPDATE 无 LIMIT"] -->|"持有 X 锁 45s"| WAIT["锁等待"]
+    end
+    subgraph P2["② 连接耗尽"]
+        direction TB
+        CONN["连接堆积"] -->|"threads_connected = 500/500"| REJECT["新连接被拒绝"]
+    end
+    P1 ==>|"row_lock_time_avg > 1000ms"| P2
+
+    style SQL fill:#ffcdd2,stroke:#c62828
+    style REJECT fill:#ffebee,stroke:#c62828,stroke-width:2px

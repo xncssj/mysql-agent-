@@ -1,0 +1,21 @@
+flowchart TB
+    subgraph P1["① 路由"]
+        direction LR
+        Input["用户输入"] --> Router{"InputRouter 本章<br/>→ SQL 层 或 实例层"}
+    end
+    subgraph P2["② 分层诊断"]
+        direction LR
+        SQL["SQL 层<br/>NL2SQL → EXPLAIN → Index → Rewrite"]
+        Inst["实例层<br/>Metrics → RootCause → CrossCorrelator"]
+        Inst -->|"发现慢 SQL，下钻"| SQL
+    end
+    subgraph P3["③ 报告"]
+        direction LR
+        Report["ReportGenerator（第 13 讲）"]
+    end
+    P1 ==> P2 ==> P3
+
+    style Router fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style SQL fill:#e8f5e9,stroke:#2e7d32
+    style Inst fill:#fff3e0,stroke:#ef6c00
+    style Report fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px

@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.env
+*.egg-info/
+build/
+dist/
+
+# 大体积二进制与可重建缓存
+data/vector_index/*.pkl
+data/vector_index/faiss_index.bin
+data/vector_index/st_model/
+mysql-agent-engine/data/vector_index/*.pkl
+mysql-agent-engine/data/vector_index/faiss_index.bin
+mysql-agent-engine/data/vector_index/st_model/
+mysql-agent-engine/data/vector_index_bge/faiss_index.bin
+mysql-agent-engine/data/vector_index_bge/st_model/
+mysql-agent-engine/logs/

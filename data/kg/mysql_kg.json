@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "description": "MySQL Agent 因果与知识图谱（Phase 1 JSON，与第 1/11 讲共用）",
+  "nodes": [
+    {"id": "RC01", "type": "Rule", "name": "缺失索引", "metrics": ["slow_query_rate", "bp_hit_rate"]},
+    {"id": "RC02", "type": "Rule", "name": "锁等待/死锁", "metrics": ["row_lock_time_avg", "deadlock_count"]},
+    {"id": "RC07", "type": "Rule", "name": "大事务", "metrics": ["row_lock_time_avg", "slow_query_rate"]},
+    {"id": "RC08", "type": "Rule", "name": "复制延迟", "metrics": ["replication_lag"]},
+    {"id": "sym_slow_q", "type": "Symptom", "name": "慢查询增多", "metrics": ["slow_query_rate"]},
+    {"id": "sym_conn_high", "type": "Symptom", "name": "连接数高", "metrics": ["connections_pct"]},
+    {"id": "sym_lock_wait", "type": "Symptom", "name": "锁等待", "metrics": ["row_lock_time_avg"]},
+    {"id": "sym_repl_lag", "type": "Symptom", "name": "复制延迟", "metrics": ["replication_lag"]},
+    {"id": "int_full_scan", "type": "Concept", "name": "全表扫描"},
+    {"id": "int_lock_block", "type": "Concept", "name": "锁阻塞"},
+    {"id": "cmd_explain", "type": "Command", "name": "EXPLAIN"},
+    {"id": "cmd_innodb_trx", "type": "Command", "name": "SELECT FROM information_schema.innodb_trx"},
+    {"id": "cmd_slave_status", "type": "Command", "name": "SHOW SLAVE STATUS"}
+  ],
+  "edges": [
+    {"source": "RC01", "target": "int_full_scan", "relation": "causes", "weight": 0.9},
+    {"source": "int_full_scan", "target": "sym_slow_q", "relation": "causes", "weight": 0.85},
+    {"source": "RC02", "target": "int_lock_block", "relation": "causes", "weight": 0.95},
+    {"source": "int_lock_block", "target": "sym_lock_wait", "relation": "causes", "weight": 0.9},
+    {"source": "int_lock_block", "target": "sym_conn_high", "relation": "causes", "weight": 0.8},
+    {"source": "RC07", "target": "sym_lock_wait", "relation": "causes", "weight": 0.85},
+    {"source": "RC08", "target": "sym_repl_lag", "relation": "causes", "weight": 0.9},
+    {"source": "cmd_explain", "target": "RC01", "relation": "verifies", "weight": 1.0},
+    {"source": "cmd_innodb_trx", "target": "RC07", "relation": "verifies", "weight": 1.0},
+    {"source": "cmd_slave_status", "target": "RC08", "relation": "verifies", "weight": 1.0}
+  ]
+}

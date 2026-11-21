@@ -1,0 +1,25 @@
+flowchart TB
+    subgraph P1["① 语法与安全"]
+        direction LR
+        SQL["生成的 SQL"]:::input --> V1["1. 语法解析（sqlparse）"]:::step
+        V1 --> V2{"2. 安全检查"}:::step
+        V2 -->|"发现 DROP/TRUNCATE → 拒绝"| F1["❌ 拒绝执行"]:::fail
+    end
+    subgraph P2["② Schema 与性能"]
+        direction LR
+        V3["3. Schema 检查<br/>（表不存在 → 警告）"]:::step --> V4["4. 性能检查<br/>（无 LIMIT → 警告）"]:::step
+    end
+    subgraph P3["③ 聚合与通过"]
+        direction LR
+        V5["5. 聚合检查<br/>（无 GROUP BY → 警告）"]:::step --> OK["✅ 校验通过"]:::ok
+    end
+    P1 ==>|"通过"| P2 ==> P3
+
+    style SQL fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style V2 fill:#fff3e0,stroke:#ef6c00
+    style F1 fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style OK fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef step fill:#e3f2fd,stroke:#1565c0
+    classDef fail fill:#ffebee,stroke:#c62828,stroke-width:2px
+    classDef ok fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

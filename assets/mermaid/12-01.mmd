@@ -1,0 +1,12 @@
+flowchart TD
+    A["告警: 连接数 90%"] --> B{"只看连接数\n容易误判"}
+    B -->|"错误决策"| C["增加 max_connections"]
+    C --> D["连接堆积加剧\n真正问题未解决"]
+    B -->|"交叉判断"| E["连接数 90% × 锁等待 2300ms"]
+    E --> F["CC01 命中: 锁阻塞导致连接堆积"]
+    F --> G["正确决策: 排查锁等待"]
+
+    style A fill:#ffebee,stroke:#c62828
+    style D fill:#ffebee,stroke:#c62828
+    style F fill:#e8f5e9,stroke:#2e7d32
+    style G fill:#e8f5e9,stroke:#2e7d32

@@ -1,0 +1,40 @@
+name: explain_diagnosis
+version: "1.0"
+description: |
+  分析 MySQL EXPLAIN 输出，识别性能风险并给出优化建议。
+
+  ## 分析步骤
+  1. 逐行解析 EXPLAIN，提取 type/key/rows/Extra
+  2. 对照风险规则库 R001-R018 识别风险
+  3. 检索知识库获取优化方案
+  4. 评估优化收益
+  5. 生成结构化诊断报告
+
+cot_steps:
+  - "逐行分析 EXPLAIN 每个表的 type/key/rows/Extra"
+  - "对照 R001-R018 规则识别风险点"
+  - "检索知识库获取对应优化方案"
+  - "给出可执行的 DDL 或 SQL 改写建议"
+  - "输出 JSON 格式诊断报告"
+
+output_schema:
+  type: object
+  required: [findings, summary]
+  properties:
+    findings:
+      type: array
+      items:
+        type: object
+        required: [rule_id, level, issue, evidence, suggestion]
+        properties:
+          rule_id: {type: string}
+          level: {type: string, enum: [CRITICAL, WARNING, INFO]}
+          issue: {type: string}
+          evidence: {type: string}
+          suggestion: {type: string}
+          source: {type: string}
+    summary: {type: string}
+    optimization_sql: {type: string}
+    ddl_suggestions:
+      type: array
+      items: {type: string}

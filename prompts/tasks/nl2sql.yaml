@@ -1,0 +1,24 @@
+name: nl2sql
+version: "1.0"
+description: |
+  将自然语言（尤其诊断场景）映射为可执行的只读诊断 SQL，经 Schema Linking 与校验后输出。
+
+cot_steps:
+  - "识别用户意图与诊断场景（慢查询/锁/全表扫描等）"
+  - "Schema Linking：绑定到 performance_schema / sys / information_schema"
+  - "生成只读 SQL，禁止写操作"
+  - "语法与权限自检；失败则自修正"
+  - "输出 JSON（sql + rationale）"
+
+output_schema:
+  type: object
+  required: [sql, rationale]
+  properties:
+    sql: {type: string}
+    rationale: {type: string}
+    tables_used:
+      type: array
+      items: {type: string}
+    warnings:
+      type: array
+      items: {type: string}

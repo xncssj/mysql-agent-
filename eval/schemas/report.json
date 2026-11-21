@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["summary", "root_cause", "suggestions"],
+  "properties": {
+    "summary": {"type": "string", "minLength": 1},
+    "root_cause": {"type": "string", "minLength": 1},
+    "suggestions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "sql_rewrite": {"type": ["string", "null"]},
+    "ddl_advice": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}

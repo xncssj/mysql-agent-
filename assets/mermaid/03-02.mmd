@@ -1,0 +1,35 @@
+graph LR
+    subgraph System["System Role 角色定义"]
+        S["mysql_dba_role.yaml<br/>能力边界 + 核心规则"]
+    end
+    subgraph Task["Task Template 任务定义"]
+        T1["explain_diagnosis.yaml"]:::task
+        T2["index_advice.yaml"]:::task
+        T3["sql_rewrite.yaml"]:::task
+        T4["instance_diagnosis.yaml"]:::task
+    end
+    subgraph FewShot["Few-shot 示例 格式示范"]
+        F1["explain_examples.jsonl<br/>EXPLAIN 诊断示例"]
+        F2["index_examples.jsonl<br/>索引建议示例"]
+    end
+    subgraph Schema["JSON Schema 输出约束"]
+        J1["diagnosis_output.json<br/>诊断输出格式"]
+        J2["report_output.json<br/>报告输出格式"]
+    end
+    subgraph Builder["PromptBuilder 组装器"]
+        B["四层结构组装<br/>System + Task + FewShot + Schema"]
+    end
+
+    System ==> Builder
+    Task ==> Builder
+    FewShot ==> Builder
+    Schema ==> Builder
+    Builder --> Output["完整 Prompt 发送给 LLM"]
+
+    classDef task fill:#e3f2fd,stroke:#1565c0
+    style System fill:#e8f5e9,stroke:#2e7d32
+    style Task fill:#fff3e0,stroke:#ef6c00
+    style FewShot fill:#fce4ec,stroke:#c2185b
+    style Schema fill:#f3e5f5,stroke:#7b1fa2
+    style Builder fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style Output fill:#fff8e1,stroke:#f57f17,stroke-width:2px

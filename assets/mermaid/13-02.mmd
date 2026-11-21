@@ -1,0 +1,29 @@
+flowchart TD
+    subgraph 输入["诊断结果 (第 9-12 讲)"]
+        A1["异常事件列表"]
+        A2["根因排序"]
+        A3["交叉判断命中"]
+        A4["SQL 级诊断 (第 5-8 讲)"]
+    end
+
+    subgraph 处理流水线
+        B1["EvidenceCollector<br/>收集指标快照、慢查询、锁信息、进程列表"]
+        B2["TimelineBuilder<br/>按时间排序事件，构建故障时间线"]
+        B3["ReportGenerator<br/>(LLM + Template)<br/>填充模板 + RAG 增强 + 结构化输出"]
+    end
+
+    subgraph 输出
+        C1["Markdown 报告"]:::output
+        C2["JSON 结构化数据"]:::output
+    end
+
+    A1 --> B1
+    A2 --> B1
+    A3 --> B1
+    A4 --> B1
+    B1 --> B2
+    B2 --> B3
+    B3 --> C1
+    B3 --> C2
+
+    classDef output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

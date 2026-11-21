@@ -1,0 +1,38 @@
+-- ecommerce demo schema + sample data for local lab
+CREATE DATABASE IF NOT EXISTS ecommerce DEFAULT CHARACTER SET utf8mb4;
+USE ecommerce;
+
+CREATE TABLE IF NOT EXISTS merchants (
+  merchant_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  order_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  merchant_id BIGINT NOT NULL,
+  created_at DATETIME NOT NULL,
+  status TINYINT NOT NULL,
+  total_amount DECIMAL(12,2) NOT NULL,
+  KEY idx_orders_status_created (status, created_at),
+  KEY idx_orders_merchant (merchant_id)
+);
+
+INSERT INTO merchants (name) VALUES ('店铺A'), ('店铺B'), ('店铺C');
+
+INSERT INTO orders (merchant_id, created_at, status, total_amount)
+SELECT
+  1 + (seq % 3),
+  DATE_ADD('2024-01-01', INTERVAL seq HOUR),
+  IF(seq % 5 = 0, 1, 2),
+  ROUND(10 + (seq % 100) * 1.5, 2)
+FROM (
+  SELECT a.N + b.N * 10 + c.N * 100 AS seq
+  FROM
+    (SELECT 0 N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+     UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) a,
+    (SELECT 0 N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+     UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) b,
+    (SELECT 0 N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+     UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) c
+) nums
+WHERE seq < 500;

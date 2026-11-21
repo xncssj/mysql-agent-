@@ -1,0 +1,25 @@
+flowchart TD
+    RC[实例层 RC01/RC06/RC07 命中] --> Drill[SQL 下钻拉 Top 慢 SQL]:::step
+    Drill --> Parallel{并行诊断}
+    Parallel --> Exp[ExplainAgent<br/>R001-R018]:::step
+    Parallel --> Idx[IndexAdvisor<br/>I001-I012]:::step
+    Parallel --> Rew[SQLRewriter<br/>W001-W015]:::step
+
+    Exp --> Decision{决策引擎}
+    Idx --> Decision
+    Rew --> Decision
+
+    Decision -->|写法问题| RewFirst[先改写<br/>W008/W007]:::step
+    Decision -->|索引缺失| IdxFirst[先建索引<br/>I001-I004]:::step
+    Decision -->|两者都要| Both[改写 + 建索引]:::step
+    Decision -->|复杂场景| LLM[LLM 辅助改写]:::step
+
+    RewFirst --> Verify[EXPLAIN 验证<br/>第 6 讲]:::step
+    IdxFirst --> Verify
+    Both --> Verify
+    LLM --> Verify
+
+    Verify --> Report[纳入 ReportGenerator<br/>第 13 讲]:::output
+
+    classDef step fill:#e3f2fd,stroke:#1565c0
+    classDef output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

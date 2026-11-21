@@ -1,0 +1,23 @@
+name: sql_rewrite
+version: "1.0"
+description: |
+  基于风险规则与改写规则 W001-W015，将低效 SQL 改写为等价或更优写法，并建议再次 EXPLAIN 验证。
+
+cot_steps:
+  - "识别可改写模式（子查询→JOIN、OR→UNION、大 OFFSET→Keyset 等）"
+  - "对照 W001-W015 选择改写规则"
+  - "生成改写后 SQL，保持语义等价"
+  - "提示再次 EXPLAIN 与回归验证"
+  - "输出 JSON 格式改写结果"
+
+output_schema:
+  type: object
+  required: [original_sql, rewritten_sql, rules_applied, summary]
+  properties:
+    original_sql: {type: string}
+    rewritten_sql: {type: string}
+    rules_applied:
+      type: array
+      items: {type: string}
+    summary: {type: string}
+    verify_hint: {type: string}

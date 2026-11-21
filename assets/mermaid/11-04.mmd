@@ -1,0 +1,23 @@
+flowchart TB
+    subgraph C1["因果链 A"]
+        direction LR
+        RC01["RC01 缺失索引"] -->|"0.9"| INT1["全表扫描"] -->|"0.85"| SYM1["慢查询增多"]:::symptom
+    end
+
+    subgraph C2["因果链 B（多根因竞争）"]
+        direction LR
+        RC07["RC07 大事务"] -->|"0.8"| INT2["锁阻塞"]
+        INT2 -->|"0.9"| SYM2["锁等待"]:::symptom
+        INT2 -->|"0.8"| SYM3["连接数高"]:::symptom
+    end
+
+    SYM1 -.->|"✓ 检测到"| Check1{"异常事件"}
+    SYM2 -.->|"✓"| Check1
+    SYM3 -.->|"✓"| Check1
+    Check1 --> Result["推理结论"]
+    Result -->|"RC07 0.82 > RC01 0.71"| Rank["根因排序：RC07 > RC01"]
+
+    classDef symptom fill:#fff3e0,stroke:#ef6c00
+    style Check1 fill:#e3f2fd,stroke:#1565c0
+    style Result fill:#e8f5e9,stroke:#2e7d32
+    style Rank fill:#fff8e1,stroke:#f57f17

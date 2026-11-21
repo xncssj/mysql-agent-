@@ -1,0 +1,1060 @@
+{
+  "total": 50,
+  "avg_auto_score": 5.0,
+  "passed_avg_ge_min": true,
+  "min_avg": 4.0,
+  "gte4": 50,
+  "cases": [
+    {
+      "case_id": "E2E001",
+      "user_query": "SELECT * FROM orders WHERE status=1 很慢，怎么优化",
+      "context": {
+        "sql": "SELECT * FROM orders WHERE status=1",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 1 条索引建议，首要规则 I001：缺失等值索引。 应用规则 W007：隐式转换修正"
+    },
+    {
+      "case_id": "E2E002",
+      "user_query": "EXPLAIN 一下 SELECT * FROM orders WHERE merchant_id=1",
+      "context": {
+        "sql": "SELECT * FROM orders WHERE merchant_id=1",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 1 条索引建议，首要规则 I001：缺失等值索引。 应用规则 W006：SELECT * 精简"
+    },
+    {
+      "case_id": "E2E003",
+      "user_query": "这条 SQL 怎么优化：SELECT * FROM orders WHERE DATE(created_at)='2024-01-01'",
+      "context": {
+        "sql": "SELECT * FROM orders WHERE DATE(created_at)='2024-01-01'",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 2 条索引建议，首要规则 I001：缺失等值索引、函数导致索引失效。 应用规则 W008：函数包裹列"
+    },
+    {
+      "case_id": "E2E004",
+      "user_query": "索引是不是有问题：SELECT * FROM orders WHERE status=2 ORDER BY created_at",
+      "context": {
+        "sql": "SELECT * FROM orders WHERE status=2 ORDER BY created_at",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 2 条索引建议，首要规则 I001：缺失等值索引、缺失排序索引。 应用规则 W007：隐式转换修正"
+    },
+    {
+      "case_id": "E2E005",
+      "user_query": "如何改写 SELECT * FROM orders WHERE id IN (SELECT order_id FROM order_items)",
+      "context": {
+        "sql": "SELECT * FROM orders WHERE id IN (SELECT order_id FROM order_items)",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 1 条索引建议，首要规则 I001：缺失等值索引。 应用规则 W006：SELECT * 精简"
+    },
+    {
+      "case_id": "E2E006",
+      "user_query": "执行计划显示全表扫描 SELECT a.* FROM orders a",
+      "context": {
+        "sql": "SELECT a.* FROM orders a",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 1 条索引建议，首要规则 I001：缺失等值索引。 未匹配到可应用的 SQL 改写规则。"
+    },
+    {
+      "case_id": "E2E007",
+      "user_query": "慢查询怎么优化 SELECT * FROM orders WHERE status=1 LIMIT 100",
+      "context": {
+        "sql": "SELECT * FROM orders WHERE status=1 LIMIT 100",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 1 条索引建议，首要规则 I001：缺失等值索引。 应用规则 W007：隐式转换修正"
+    },
+    {
+      "case_id": "E2E008",
+      "user_query": "SELECT order_id,total_amount FROM orders WHERE status=1 需要覆盖索引吗",
+      "context": {
+        "sql": "SELECT order_id,total_amount FROM orders WHERE status=1",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 2 条索引建议，首要规则 I001：缺失等值索引、覆盖索引机会。 应用规则 W007：隐式转换修正"
+    },
+    {
+      "case_id": "E2E009",
+      "user_query": "update 语句也慢：UPDATE orders SET status=2 WHERE order_id=1",
+      "context": {
+        "sql": "UPDATE orders SET status=2 WHERE order_id=1",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 1 条索引建议，首要规则 I001：缺失等值索引。 应用规则 W007：隐式转换修正"
+    },
+    {
+      "case_id": "E2E010",
+      "user_query": "delete 大批量：DELETE FROM orders WHERE created_at < '2020-01-01'",
+      "context": {
+        "sql": "DELETE FROM orders WHERE created_at < '2020-01-01'",
+        "table": "orders",
+        "explain": {
+          "type": "ALL",
+          "rows": 500000
+        }
+      },
+      "expected_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "SQL 链路",
+      "actual_tools": [
+        "explain_sql",
+        "suggest_index",
+        "rewrite_sql"
+      ],
+      "answer_preview": "诊断路径：sql。发现 1 个严重风险：全表扫描大表。 识别到 2 条索引建议，首要规则 I001：缺失等值索引、缺失范围索引。 未匹配到可应用的 SQL 改写规则。"
+    },
+    {
+      "case_id": "E2E011",
+      "user_query": "数据库响应慢，连接数也很高",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E012",
+      "user_query": "实例 CPU 很高，有告警",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E013",
+      "user_query": "数据库异常，内存很高",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E014",
+      "user_query": "连接快满了，实例故障",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E015",
+      "user_query": "数据库很慢，IO 很高",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E016",
+      "user_query": "生产实例告警：响应慢",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E017",
+      "user_query": "数据库连接满了",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E018",
+      "user_query": "实例异常抖动，响应慢",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E019",
+      "user_query": "数据库 CPU 高且有告警",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E020",
+      "user_query": "实例内存高，数据库响应慢",
+      "context": {
+        "metrics_fixture_file": "fixtures/metrics_high_connections.json"
+      },
+      "expected_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "实例链路",
+      "actual_tools": [
+        "check_instance_metrics",
+        "diagnose_root_cause",
+        "cross_correlate",
+        "generate_report"
+      ],
+      "answer_preview": "诊断路径：instance。{'critical': 1, 'warning': 2} 首要根因 RC05（连接池耗尽）。 未命中交叉关联模式 已生成实例 mysql-instance-01 的复盘报告"
+    },
+    {
+      "case_id": "E2E021",
+      "user_query": "出现 InnoDB 死锁了",
+      "context": {
+        "innodb_status_file": "fixtures/deadlock_001.txt"
+      },
+      "expected_tools": [
+        "analyze_deadlock"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "死锁",
+      "actual_tools": [
+        "analyze_deadlock"
+      ],
+      "answer_preview": "诊断路径：advanced。死锁类型 lock_order，牺牲事务 T2"
+    },
+    {
+      "case_id": "E2E022",
+      "user_query": "deadlock 告警怎么排查",
+      "context": {
+        "innodb_status_file": "fixtures/deadlock_001.txt"
+      },
+      "expected_tools": [
+        "analyze_deadlock"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "死锁",
+      "actual_tools": [
+        "analyze_deadlock"
+      ],
+      "answer_preview": "诊断路径：advanced。死锁类型 lock_order，牺牲事务 T2"
+    },
+    {
+      "case_id": "E2E023",
+      "user_query": "线上死锁频繁",
+      "context": {
+        "innodb_status_file": "fixtures/deadlock_001.txt"
+      },
+      "expected_tools": [
+        "analyze_deadlock"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "死锁",
+      "actual_tools": [
+        "analyze_deadlock"
+      ],
+      "answer_preview": "诊断路径：advanced。死锁类型 lock_order，牺牲事务 T2"
+    },
+    {
+      "case_id": "E2E024",
+      "user_query": "检测到死锁 victim",
+      "context": {
+        "innodb_status_file": "fixtures/deadlock_001.txt"
+      },
+      "expected_tools": [
+        "analyze_deadlock"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "死锁",
+      "actual_tools": [
+        "analyze_deadlock"
+      ],
+      "answer_preview": "诊断路径：advanced。死锁类型 lock_order，牺牲事务 T2"
+    },
+    {
+      "case_id": "E2E025",
+      "user_query": "业务报死锁回滚",
+      "context": {
+        "innodb_status_file": "fixtures/deadlock_001.txt"
+      },
+      "expected_tools": [
+        "analyze_deadlock"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "死锁",
+      "actual_tools": [
+        "analyze_deadlock"
+      ],
+      "answer_preview": "诊断路径：advanced。死锁类型 lock_order，牺牲事务 T2"
+    },
+    {
+      "case_id": "E2E026",
+      "user_query": "死锁日志怎么看",
+      "context": {
+        "innodb_status_file": "fixtures/deadlock_001.txt"
+      },
+      "expected_tools": [
+        "analyze_deadlock"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "死锁",
+      "actual_tools": [
+        "analyze_deadlock"
+      ],
+      "answer_preview": "诊断路径：advanced。死锁类型 lock_order，牺牲事务 T2"
+    },
+    {
+      "case_id": "E2E027",
+      "user_query": "innodb deadlock found",
+      "context": {
+        "innodb_status_file": "fixtures/deadlock_001.txt"
+      },
+      "expected_tools": [
+        "analyze_deadlock"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "死锁",
+      "actual_tools": [
+        "analyze_deadlock"
+      ],
+      "answer_preview": "诊断路径：advanced。死锁类型 lock_order，牺牲事务 T2"
+    },
+    {
+      "case_id": "E2E028",
+      "user_query": "订单表死锁了",
+      "context": {
+        "innodb_status_file": "fixtures/deadlock_001.txt"
+      },
+      "expected_tools": [
+        "analyze_deadlock"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "死锁",
+      "actual_tools": [
+        "analyze_deadlock"
+      ],
+      "answer_preview": "诊断路径：advanced。死锁类型 lock_order，牺牲事务 T2"
+    },
+    {
+      "case_id": "E2E029",
+      "user_query": "Slave_IO_Running: No，主从复制中断",
+      "context": {
+        "slave_status": {
+          "Slave_IO_Running": "No",
+          "Last_IO_Error": "error connecting to master"
+        }
+      },
+      "expected_tools": [
+        "check_replication"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "复制",
+      "actual_tools": [
+        "check_replication"
+      ],
+      "answer_preview": "诊断路径：advanced。IO 线程停止: error connecting to master"
+    },
+    {
+      "case_id": "E2E030",
+      "user_query": "主从复制 SQL 线程停了 Duplicate entry",
+      "context": {
+        "slave_status": {
+          "Slave_SQL_Running": "No",
+          "Last_SQL_Error": "Duplicate entry"
+        }
+      },
+      "expected_tools": [
+        "check_replication"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "复制",
+      "actual_tools": [
+        "check_replication"
+      ],
+      "answer_preview": "诊断路径：advanced。SQL 线程停止: Duplicate entry"
+    },
+    {
+      "case_id": "E2E031",
+      "user_query": "复制延迟 Seconds_Behind_Master=7200",
+      "context": {
+        "slave_status": {
+          "Seconds_Behind_Master": 7200,
+          "Slave_IO_Running": "Yes",
+          "Slave_SQL_Running": "Yes"
+        }
+      },
+      "expected_tools": [
+        "check_replication"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "复制",
+      "actual_tools": [
+        "check_replication"
+      ],
+      "answer_preview": "诊断路径：advanced。复制延迟 7200s"
+    },
+    {
+      "case_id": "E2E032",
+      "user_query": "replication lag 很高",
+      "context": {
+        "slave_status": {
+          "Seconds_Behind_Master": 3600,
+          "Slave_IO_Running": "Yes",
+          "Slave_SQL_Running": "Yes"
+        }
+      },
+      "expected_tools": [
+        "check_replication"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "复制",
+      "actual_tools": [
+        "check_replication"
+      ],
+      "answer_preview": "诊断路径：advanced。复制延迟 3600s"
+    },
+    {
+      "case_id": "E2E033",
+      "user_query": "从库 slave 复制中断",
+      "context": {
+        "slave_status": {
+          "Slave_IO_Running": "No"
+        }
+      },
+      "expected_tools": [
+        "check_replication"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "复制",
+      "actual_tools": [
+        "check_replication"
+      ],
+      "answer_preview": "诊断路径：advanced。IO 线程停止: unknown error"
+    },
+    {
+      "case_id": "E2E034",
+      "user_query": "主从延迟两小时",
+      "context": {
+        "slave_status": {
+          "Seconds_Behind_Master": 7200,
+          "Slave_IO_Running": "Yes",
+          "Slave_SQL_Running": "Yes"
+        }
+      },
+      "expected_tools": [
+        "check_replication"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "复制",
+      "actual_tools": [
+        "check_replication"
+      ],
+      "answer_preview": "诊断路径：advanced。复制延迟 7200s"
+    },
+    {
+      "case_id": "E2E035",
+      "user_query": "检查 replication 状态",
+      "context": {
+        "slave_status": {
+          "Slave_IO_Running": "Yes",
+          "Slave_SQL_Running": "Yes",
+          "Seconds_Behind_Master": 10
+        }
+      },
+      "expected_tools": [
+        "check_replication"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "复制",
+      "actual_tools": [
+        "check_replication"
+      ],
+      "answer_preview": "诊断路径：advanced。复制状态正常"
+    },
+    {
+      "case_id": "E2E036",
+      "user_query": "slave 延迟升高",
+      "context": {
+        "slave_status": {
+          "Seconds_Behind_Master": 900,
+          "Slave_IO_Running": "Yes",
+          "Slave_SQL_Running": "Yes"
+        }
+      },
+      "expected_tools": [
+        "check_replication"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "复制",
+      "actual_tools": [
+        "check_replication"
+      ],
+      "answer_preview": "诊断路径：advanced。复制延迟 900s"
+    },
+    {
+      "case_id": "E2E037",
+      "user_query": "redo log 是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E038",
+      "user_query": "binlog 原理是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E039",
+      "user_query": "MVCC 是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E040",
+      "user_query": "什么是 covering index / Using index",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "check_instance_metrics",
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：hybrid。{'critical': 1, 'warning': 2}"
+    },
+    {
+      "case_id": "E2E041",
+      "user_query": "事务隔离级别是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E042",
+      "user_query": "buffer pool 推荐怎么设置",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E043",
+      "user_query": "两阶段提交原理是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E044",
+      "user_query": "ERROR 1205 是什么意思",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E045",
+      "user_query": "间隙锁是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E046",
+      "user_query": "undo log 是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E047",
+      "user_query": "change buffer 是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E048",
+      "user_query": "Adaptive Hash Index 原理是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E049",
+      "user_query": "脏页是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    },
+    {
+      "case_id": "E2E050",
+      "user_query": "GTID 是什么",
+      "context": {},
+      "expected_tools": [
+        "search_knowledge"
+      ],
+      "human_score": null,
+      "auto_score": 5.0,
+      "reviewer": "auto_v1",
+      "notes": "RAG 知识问答",
+      "actual_tools": [
+        "search_knowledge"
+      ],
+      "answer_preview": "诊断路径：knowledge，已完成工具调用：search_knowledge。"
+    }
+  ]
+}

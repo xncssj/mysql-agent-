@@ -1,0 +1,119 @@
+# Prompt 版本注册表
+# 用途：tasks/*.yaml 的汇总视图 + 变更历史，支撑 A/B 分流与灰度回滚（第 16 讲 5.1）
+# 约定：current 必须与对应 prompts/tasks/*.yaml 的 version 字段一致，改模板时两处同改
+# 校验：scripts/check_prompt_versions.py 会比对本文件与 tasks 目录，不一致即报错
+
+updated: "2026-11-13"
+schema_version: 1
+
+# A/B 分流默认比例（第 16 讲 5.2：按 session_id 哈希取模分流）
+ab_default:
+  split_ratio: 0.5
+  min_sample_size: 100        # 低于此样本量只看趋势，不做显著性判断
+
+versions:
+  explain_diagnosis:
+    current: "1.0"
+    file: prompts/tasks/explain_diagnosis.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：四层 Prompt 结构 + CoT 步骤 + 固定输出 Schema"
+        eval:
+          golden_set: "eval/golden_set.jsonl（45 条）"
+          note: "基线结果见 eval/baseline.json"
+
+  index_advice:
+    current: "1.0"
+    file: prompts/tasks/index_advice.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：候选列 + 复合索引组合 + DDL 模板"
+        eval:
+          golden_set: "eval/golden_set.jsonl"
+          note: "覆盖最左前缀、区分度、覆盖索引三类场景"
+
+  sql_rewrite:
+    current: "1.0"
+    file: prompts/tasks/sql_rewrite.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：等值改写 + 语义等价校验 + 风险标注"
+        eval:
+          golden_set: "eval/golden_set.jsonl"
+          note: "改写结果需过 SQL 解析器校验，防语义漂移"
+
+  root_cause:
+    current: "1.0"
+    file: prompts/tasks/root_cause.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：RC01–RC18 规则表召回 + 证据链组织 + 反向验证"
+        eval:
+          golden_set: "eval/golden_set.jsonl"
+          note: "以规则命中率与证据可回放为主要指标"
+
+  instance_diagnosis:
+    current: "1.0"
+    file: prompts/tasks/instance_diagnosis.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：实例级指标 + 等待事件 + 状态变量三类输入"
+        eval:
+          golden_set: "eval/golden_set.jsonl"
+          note: "对应第 10 讲指标采集与异常检测"
+
+  replication_diagnosis:
+    current: "1.0"
+    file: prompts/tasks/replication_diagnosis.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：SHOW SLAVE STATUS 解析 + RP01–RP10 判定"
+        eval:
+          golden_set: "eval/golden_set.jsonl"
+          note: "区分 IO/SQL 线程、延迟、数据不一致三类"
+
+  deadlock_analysis:
+    current: "1.0"
+    file: prompts/tasks/deadlock_analysis.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：等待图构建 + 环检测 + 加锁顺序建议"
+        eval:
+          golden_set: "eval/golden_set.jsonl"
+          note: "输入为 SHOW ENGINE INNODB STATUS 原文"
+
+  nl2sql:
+    current: "1.0"
+    file: prompts/tasks/nl2sql.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：Schema Linking + Few-shot + 自修正循环（第 5 讲）"
+        eval:
+          golden_set: "eval/golden_set.jsonl"
+          note: "执行准确率优先于语法正确率"
+
+  report_generation:
+    current: "1.0"
+    file: prompts/tasks/report_generation.yaml
+    history:
+      - version: "1.0"
+        date: "2026-08-24"
+        changes: "首版：故障时间线 + 根因 + 处置 + 复盘四段式（第 13 讲）"
+        eval:
+          golden_set: "手动抽检"
+          note: "报告类输出以人工评分为主，暂不纳入自动打分"
+
+# 演进示例（第 16 讲 5.1）
+# 正文演示 explain_diagnosis 从 1.0 → 1.5 → 2.0 的迭代路径（静态 Few-shot → CoT → 动态 Few-shot + ReAct）。
+# 该路径是设计目标，仓库当前仍为 1.0；每升一版须同步：
+#   1) 改 tasks/explain_diagnosis.yaml 的 version
+#   2) 在本文件追加 history 条目
+#   3) 用 eval/compare_baseline.py 出前后对比

@@ -1,0 +1,14 @@
+# Embedding / index build defaults
+embedding:
+  backend: sentence-transformers   # tfidf | sentence-transformers
+  model: BAAI/bge-small-zh-v1.5
+  tfidf_dim: 384
+  # Rebuild:
+  #   HF_ENDPOINT=https://hf-mirror.com \
+  #   python scripts/build_index.py --use-st -m BAAI/bge-small-zh-v1.5 \
+  #     --output data/vector_index
+
+index:
+  type: flat_ip
+  chunk_size: 800
+  chunk_overlap: 150

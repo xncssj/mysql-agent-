@@ -1,0 +1,27 @@
+flowchart TB
+    subgraph P1["① 理解与对齐"]
+        direction LR
+        Q["用户自然语言查询"]:::input --> S1["1. Schema Linking<br/>识别表/字段 + 意图判断"]:::step
+        S1 --> S2["2. Value Alignment<br/>枚举值映射 + 时间解析 + 同义词扩展"]:::step
+    end
+    subgraph P2["② 生成与校验"]
+        direction LR
+        S3["3. SQL 生成<br/>Few-shot + CoT → LLM"]:::step --> S4{"4. SQL 校验<br/>语法/安全/性能"}:::step
+        S4 -->|"不通过"| F["反馈修正<br/>警告信息 → LLM 重试"]:::feedback
+        F --> S3
+    end
+    subgraph P3["③ 渲染"]
+        direction LR
+        S5["5. 结果渲染<br/>格式化 + 自然语言解释"]:::output
+    end
+    P1 ==> P2
+    P2 ==>|"通过"| P3
+
+    style Q fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style S4 fill:#fff3e0,stroke:#ef6c00
+    style S5 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style F fill:#ffebee,stroke:#c62828
+    classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef step fill:#e3f2fd,stroke:#1565c0
+    classDef output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef feedback fill:#ffebee,stroke:#c62828

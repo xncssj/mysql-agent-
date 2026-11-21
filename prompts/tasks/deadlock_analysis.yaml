@@ -1,0 +1,27 @@
+name: deadlock_analysis
+version: "1.0"
+description: |
+  解析 SHOW ENGINE INNODB STATUS 的 LATEST DETECTED DEADLOCK，分类并给出避免建议。
+
+cot_steps:
+  - "结构化提取事务、锁等待、回滚事务"
+  - "分类：加锁顺序 / 间隙锁 / 唯一键 / 热点行"
+  - "关联 RC02 / CC11 与业务表"
+  - "给出应用层与 SQL 层避免策略"
+  - "输出 JSON 死锁报告"
+
+output_schema:
+  type: object
+  required: [deadlock_type, summary, recommendations]
+  properties:
+    deadlock_type:
+      type: string
+      enum: [lock_order, gap_lock, unique_key, hot_row, unknown]
+    victim_trx: {type: string}
+    tables:
+      type: array
+      items: {type: string}
+    summary: {type: string}
+    recommendations:
+      type: array
+      items: {type: string}

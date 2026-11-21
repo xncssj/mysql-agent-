@@ -1,0 +1,23 @@
+flowchart LR
+    subgraph P1["① 加载与切分"]
+        direction TB
+        A["原始 Markdown 文档集合"] -->|"提取标题、元数据"| B["TextSplitter 递归字符切片"]
+        B -->|"chunk_size=800 overlap=150"| C["语义文本块<br/>~1,000+ chunks"]
+    end
+    subgraph P2["② 向量化"]
+        direction TB
+        D["TF-IDF + TruncatedSVD"] -->|"词表 3-5 万<br/>SVD 降维 384 维"| E["384 维向量 保留语义信息"]
+    end
+    subgraph P3["③ 索引与检索"]
+        direction TB
+        F["FAISS IndexFlatIP 索引构建"] -->|"余弦相似度检索"| G["向量知识库 可检索"]
+    end
+    P1 ==> P2 ==> P3
+
+    style A fill:#e3f2fd,stroke:#1565c0
+    style B fill:#fff3e0,stroke:#ef6c00
+    style C fill:#e8f5e9,stroke:#2e7d32
+    style D fill:#fce4ec,stroke:#c2185b
+    style E fill:#fce4ec,stroke:#c2185b
+    style F fill:#f3e5f5,stroke:#7b1fa2
+    style G fill:#e1f5fe,stroke:#01579b,stroke-width:2px

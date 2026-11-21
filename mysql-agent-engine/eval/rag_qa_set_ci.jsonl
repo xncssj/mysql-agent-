@@ -1,0 +1,8 @@
+{"query": "MySQL 死锁如何排查", "source_contains": ["死锁", "innodb"]}
+{"query": "innodb_buffer_pool_size 推荐设置", "source_contains": ["buffer", "pool"]}
+{"query": "ERROR 1205 Lock wait timeout", "source_contains": ["lock", "timeout"]}
+{"query": "为什么索引失效了", "source_contains": ["索引"]}
+{"query": "慢查询怎么优化", "source_contains": ["慢查询"]}
+{"query": "主从复制延迟怎么排查", "source_contains": ["复制"]}
+{"query": "什么是覆盖索引", "source_contains": ["覆盖索引"]}
+{"query": "连接数打满怎么处理", "source_contains": ["连接"]}

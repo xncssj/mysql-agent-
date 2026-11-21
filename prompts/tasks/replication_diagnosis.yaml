@@ -1,0 +1,28 @@
+name: replication_diagnosis
+version: "1.0"
+description: |
+  基于 SHOW SLAVE/MASTER STATUS 与 RP01-RP10 规则，诊断复制延迟或中断并给出处置建议。
+
+cot_steps:
+  - "检查 IO/SQL 线程状态"
+  - "评估 Seconds_Behind_Master 与 Relay Log 堆积"
+  - "对照 RP01-RP10 命中规则"
+  - "区分延迟、中断、GTID 差异、半同步降级"
+  - "输出 JSON 诊断与处置清单"
+
+output_schema:
+  type: object
+  required: [findings, summary, actions]
+  properties:
+    findings:
+      type: array
+      items:
+        type: object
+        properties:
+          rule_id: {type: string}
+          level: {type: string}
+          message: {type: string}
+    summary: {type: string}
+    actions:
+      type: array
+      items: {type: string}

@@ -1,0 +1,38 @@
+name: instance_diagnosis
+version: "1.0"
+description: |
+  基于实例级指标异常和根因推理结果，生成诊断报告。
+
+  ## 输入
+  - anomalies: 异常事件列表（来自第 10 讲 MetricsAgent）
+  - root_causes: 根因排序列表（来自第 11 讲，RC01-RC18）
+  - cross_correlations: 交叉判断命中（来自第 12 讲，CC01-CC14）
+
+cot_steps:
+  - "确认异常指标及当前值、阈值、持续时间"
+  - "检查时间关联：发版/批任务/备份"
+  - "交叉判断关联指标（连接×QPS、脏页×写入、BP×扫描）"
+  - "列出 2-3 个最可能根因，按概率排序"
+  - "给出每条假设的验证 SQL/命令"
+  - "输出 JSON 格式诊断报告"
+
+output_schema:
+  type: object
+  required: [summary, root_causes, remediation]
+  properties:
+    summary: {type: string}
+    root_causes:
+      type: array
+      items:
+        type: object
+        properties:
+          rc_id: {type: string}
+          name: {type: string}
+          confidence: {type: number}
+          evidence: {type: array, items: {type: string}}
+    remediation:
+      type: array
+      items: {type: string}
+    verify_commands:
+      type: array
+      items: {type: string}

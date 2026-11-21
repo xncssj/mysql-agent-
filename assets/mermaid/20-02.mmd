@@ -1,0 +1,39 @@
+flowchart LR
+    subgraph 开发环境["开发环境 (docker-compose dev)"]
+        direction TB
+        CLI_D["CLI 容器<br/>代码卷挂载"]
+        APP_D["App 容器<br/>hot reload"]
+        FAISS_D["FAISS 服务<br/>数据卷: ./data/faiss"]
+    end
+
+    subgraph 生产环境["生产环境 (docker-compose prod)"]
+        direction TB
+        NGINX["Nginx 反向代理<br/>SSL 终止"]
+        APP_P["App 容器 × 2<br/>Gunicorn + Uvicorn"]
+        FAISS_P["FAISS 服务<br/>数据卷: faiss_data"]
+        PROM_P["Prometheus<br/>监控指标"]
+    end
+
+    subgraph 外部服务["外部服务"]
+        MYSQL_PROD["MySQL 生产实例<br/>只读探针"]
+        OPENAI_API["OpenAI API<br/>GPT-4 推理"]
+        GRAFANA["Grafana<br/>监控面板（可选）"]
+    end
+
+    CLI_D --> APP_D
+    APP_D --> FAISS_D
+    NGINX --> APP_P
+    APP_P --> FAISS_P
+    APP_P --> PROM_P
+
+    APP_D --> MYSQL_PROD
+    APP_D --> OPENAI_API
+    APP_P --> MYSQL_PROD
+    APP_P --> OPENAI_API
+    PROM_P --> GRAFANA
+
+    style NGINX fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style APP_P fill:#fff8e1,stroke:#f57f17,stroke-width:2px
+    style APP_D fill:#fff8e1,stroke:#f57f17
+    style MYSQL_PROD fill:#ffebee,stroke:#c62828
+    style OPENAI_API fill:#f3e5f5,stroke:#7b1fa2

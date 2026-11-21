@@ -1,0 +1,17 @@
+flowchart LR
+    subgraph P1["① 定位问题"]
+        direction TB
+        A["输入：SELECT * FROM orders<br/>WHERE DATE(created_at)='2024-01-01'"] --> B["InputRouter 分类<br/>SQL 层 confidence=0.95"]
+        B --> C["ExplainAgent 分析<br/>type=ALL rows=5000000<br/>R001 全表扫描 / R006 函数致索引失效"]
+    end
+
+    subgraph P2["② 改写与建议"]
+        direction TB
+        D["SQLRewriter 改写<br/>created_at >= '2024-01-01'<br/>AND created_at < '2024-01-02'"] --> E["IndexAdvisor 建议<br/>CREATE INDEX idx_created_at<br/>ON orders(created_at)"]
+    end
+
+    P1 --> P2
+
+    style B fill:#e3f2fd,stroke:#1565c0
+    style C fill:#fff3e0,stroke:#ef6c00
+    style E fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

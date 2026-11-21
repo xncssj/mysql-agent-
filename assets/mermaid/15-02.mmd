@@ -1,0 +1,24 @@
+flowchart LR
+    subgraph CRITICAL["🔴 CRITICAL（立即处理）"]
+        direction TB
+        RP01["RP01 IO 线程停止<br/>Slave_IO_Running=No<br/>→ 检查：网络/权限/binlog"]
+        RP02["RP02 SQL 线程停止<br/>Slave_SQL_Running=No<br/>→ 分析：Last_SQL_Error"]
+        RP06["RP06 主从 GTID 差异<br/>executed_gtid 不一致<br/>→ 禁止 skip，重建从库"]
+    end
+    subgraph WARNING["🟡 WARNING（计划处理）"]
+        direction TB
+        RP03["RP03 大延迟（>300s）<br/>→ 检查从库 CPU/IO/锁"]
+        RP04["RP04 延迟持续增长<br/>→ 定位回放瓶颈"]
+        RP05["RP05 Relay Log 堆积<br/>→ 监控 IO vs SQL 线程差"]
+        RP07["RP07 半同步降级<br/>→ 检查主库半同步配置"]
+        RP08["RP08 大事务延迟<br/>→ 拆分大事务"]
+        RP10["RP10 只读实例延迟读<br/>→ 读主库或延迟感知路由"]
+    end
+    subgraph INFO["🟢 INFO（建议优化）"]
+        direction TB
+        RP09["RP09 并行复制不足<br/>→ 设置 slave_parallel_workers"]
+    end
+
+    style CRITICAL fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style WARNING fill:#fff8e1,stroke:#f9a825,stroke-width:2px
+    style INFO fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

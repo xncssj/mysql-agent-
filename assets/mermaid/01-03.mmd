@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant U as 用户
+    participant A as RAG Agent
+    participant F as FAISS 索引
+    participant LLM as 大模型
+
+    U->>A: 提问："MySQL 死锁如何排查"
+    A->>F: 向量检索 Top-K 相关文档
+    F-->>A: 返回 5 个相关文本块
+    A->>A: 构建 Prompt（System + Context + Question）
+    A->>LLM: 发送增强后的 Prompt
+    LLM-->>A: 生成诊断回答
+    A-->>U: 返回答案 + 引用来源

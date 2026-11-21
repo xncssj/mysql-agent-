@@ -1,0 +1,30 @@
+flowchart TD
+    subgraph 数据采集层
+        R1[故障复盘报告<br/>第 13 讲] --> K1[知识抽取]
+        E1[专家经验] --> K1
+        O1[官方文档] --> K1
+    end
+
+    subgraph 知识处理层
+        K1 --> K2[知识结构化<br/>实体抽取 + 关系抽取]
+        K2 --> K3[知识图谱构建<br/>Neo4j / Nebula]
+        K2 --> K4[向量索引构建<br/>FAISS / Milvus]
+    end
+
+    subgraph 知识应用层
+        K3 --> A1[知识图谱问答<br/>路径推理]
+        K4 --> A2[向量检索<br/>语义相似度]
+        A1 --> RAG[ReportAgent<br/>RAG 增强诊断]
+        A2 --> RAG
+    end
+
+    subgraph 自学习层
+        RAG --> F1[反馈收集<br/>第 18 讲评测体系]
+        F1 --> U1[知识更新<br/>增量更新]
+        U1 --> K2
+    end
+
+    classDef storage fill:#e3f2fd,stroke:#1565c0
+    classDef process fill:#fff8e1,stroke:#f57f17
+    classDef application fill:#e8f5e9,stroke:#2e7d32
+    classDef learning fill:#fce4ec,stroke:#c2185b

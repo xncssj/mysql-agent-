@@ -1,0 +1,21 @@
+flowchart TD
+    A["输入: 指标名称 + 时间序列"] --> B{"阈值检测\n当前值 > 阈值?"}
+    B -->|"是"| B1["生成 THRESHOLD 事件\nseverity=CRITICAL"]
+    B -->|"否"| C{"MK 趋势检测\nn >= 8 且 p < alpha?"}
+    C -->|"是"| C1["生成 TREND_UP/DOWN 事件\nseverity=WARNING"]
+    C -->|"否"| D{"CUSUM 变点检测\n累积和 > threshold?"}
+    D -->|"是"| D1["生成 CHANGEPOINT 事件\nseverity=WARNING"]
+    D -->|"否"| E{"MAD 离群检测\n|z| > k?"}
+    E -->|"是"| E1["生成 OUTLIER 事件\nseverity=WARNING"]
+    E -->|"否"| F["无异常"]
+    B1 --> G["合并所有事件"]
+    C1 --> G
+    D1 --> G
+    E1 --> G
+    G --> H["输出: 异常事件列表"]
+
+    style B fill:#ffebee,stroke:#c62828
+    style C fill:#fff3e0,stroke:#ef6c00
+    style D fill:#e3f2fd,stroke:#1565c0
+    style E fill:#e8f5e9,stroke:#2e7d32
+    style H fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px

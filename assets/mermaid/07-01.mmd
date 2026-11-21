@@ -1,0 +1,20 @@
+flowchart TB
+    subgraph IN["输入层"]
+        direction LR
+        SQL["SQL 语句"] ~~~ EXP["EXPLAIN 结果"] ~~~ SCH["表结构"] ~~~ STA["索引统计"]
+    end
+
+    subgraph G6["第 6 讲 ExplainAgent"]
+        direction LR
+        E1["风险识别"] --> E2["R001-R018 风险列表"]
+    end
+
+    subgraph G7["第 7 讲 IndexAdvisor"]
+        direction LR
+        I1["索引诊断"] --> I2["候选索引生成"] --> I3["成本评估"] --> I4["DDL 建议"]
+    end
+
+    IN ==> G6 ==> G7
+
+    style E2 fill:#fff3e0,stroke:#ef6c00
+    style I4 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

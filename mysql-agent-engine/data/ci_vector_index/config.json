@@ -1,0 +1,13 @@
+{
+  "n_components": 7,
+  "max_features": 5000,
+  "ngram_range": [
+    1,
+    2
+  ],
+  "min_df": 1,
+  "max_df": 1.0,
+  "random_state": 42,
+  "dimension": 7,
+  "vocabulary_size": 311
+}

@@ -1,0 +1,16 @@
+flowchart LR
+    subgraph P1["① 反向查找"]
+        direction TB
+        A["输入：活跃症状<br/>sym_slow_q / sym_lock_wait"] --> B["症状 → 中间节点<br/>int_full_scan / int_lock_block"]
+        B --> C["中间节点 → 根因<br/>rc_no_index / rc_deadlock"]
+    end
+
+    subgraph P2["② 打分与排序"]
+        direction TB
+        D["计算得分<br/>路径越短得分越高"] --> E["输出：根因排序<br/>rc_deadlock(0.95) > rc_no_index(0.85)"]
+    end
+
+    P1 --> P2
+
+    style A fill:#fff3e0,stroke:#ef6c00
+    style E fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

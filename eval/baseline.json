@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "created_at": "2026-08-25",
+  "note": "Updated via run_all --update-baseline",
+  "golden_set": "eval/golden_set.jsonl",
+  "total": 45,
+  "passed": 45,
+  "pass_rate": 1.0,
+  "layers": {
+    "l1": {
+      "passed": 42,
+      "total": 42,
+      "pass_rate": 1.0
+    },
+    "l2": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0
+    }
+  },
+  "task_breakdown": {
+    "explain_diagnosis": {
+      "passed": 5,
+      "total": 5
+    },
+    "index_advice": {
+      "passed": 3,
+      "total": 3
+    },
+    "sql_rewrite": {
+      "passed": 3,
+      "total": 3
+    },
+    "root_cause": {
+      "passed": 5,
+      "total": 5
+    },
+    "cross_correlation": {
+      "passed": 12,
+      "total": 12
+    },
+    "deadlock_parse": {
+      "passed": 2,
+      "total": 2
+    },
+    "replication": {
+      "passed": 3,
+      "total": 3
+    },
+    "rag_retrieval": {
+      "passed": 3,
+      "total": 3
+    },
+    "nl2sql": {
+      "passed": 3,
+      "total": 3
+    },
+    "report_generation": {
+      "passed": 2,
+      "total": 2
+    },
+    "metrics_scan": {
+      "passed": 2,
+      "total": 2
+    },
+    "orchestrator_e2e": {
+      "passed": 2,
+      "total": 2
+    }
+  }
+}

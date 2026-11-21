@@ -1,0 +1,37 @@
+flowchart TB
+    subgraph NoRAG["❌ 无 RAG"]
+        direction LR
+        N1["用户查询"] --> N2["LLM 训练记忆"]:::memory
+        N2 --> N3["泛泛而谈<br/>可能过时/错误"]:::bad
+    end
+    subgraph YesRAG["✅ 有 RAG"]
+        direction TB
+        subgraph YR1
+            direction LR
+            Y1["用户查询"] --> Y2["Hybrid Search<br/>检索知识库"]:::search --> Y3["Top-K 文档 chunks"]:::chunk
+        end
+        subgraph YR2
+            direction LR
+            Y4["注入 Prompt 上下文"]:::context --> Y5["LLM 基于事实回答<br/>精确引用来源"]:::good
+        end
+        YR1 --> YR2
+    end
+
+    NoRAG ~~~ YesRAG
+
+    style YR1 fill:none,stroke:none
+    style YR2 fill:none,stroke:none
+    style N1 fill:#e1f5fe,stroke:#01579b
+    style N2 fill:#fff3e0,stroke:#ef6c00
+    style N3 fill:#ffebee,stroke:#c62828
+    style Y1 fill:#e1f5fe,stroke:#01579b
+    style Y2 fill:#e3f2fd,stroke:#1565c0
+    style Y3 fill:#e8f5e9,stroke:#2e7d32
+    style Y4 fill:#fff8e1,stroke:#f57f17
+    style Y5 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef memory fill:#fff3e0,stroke:#ef6c00
+    classDef bad fill:#ffebee,stroke:#c62828
+    classDef search fill:#e3f2fd,stroke:#1565c0
+    classDef chunk fill:#e8f5e9,stroke:#2e7d32
+    classDef context fill:#fff8e1,stroke:#f57f17
+    classDef good fill:#e8f5e9,stroke:#2e7d32

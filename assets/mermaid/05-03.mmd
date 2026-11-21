@@ -1,0 +1,20 @@
+flowchart LR
+    subgraph P1["① 检索"]
+        direction TB
+        Q["用户问题<br/>最近7天每天的订单数量"]:::input --> E["Embedder 向量化"]:::step
+        E --> S["向量相似度计算<br/>与示例库比对"]:::step
+    end
+    subgraph P2["② 注入"]
+        direction TB
+        R["排序取 Top-K（K=3）"]:::step --> F["填充 Prompt<br/>{examples} 占位符"]:::output
+    end
+    P1 --> P2
+
+    style Q fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style E fill:#e3f2fd,stroke:#1565c0
+    style S fill:#e3f2fd,stroke:#1565c0
+    style R fill:#e3f2fd,stroke:#1565c0
+    style F fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef step fill:#e3f2fd,stroke:#1565c0
+    classDef output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

@@ -1,0 +1,36 @@
+name: index_advice
+version: "1.0"
+description: |
+  基于 SQL + EXPLAIN + 表结构，对照索引规则 I001-I012，输出可执行 DDL 建议。
+
+  ## 分析步骤
+  1. 读取 EXPLAIN 风险（尤其 R001 全表扫描、索引未使用）
+  2. 采集表现有索引与列统计
+  3. 对照 I001-I012 生成候选索引 / 冗余清理建议
+  4. 评估覆盖索引与写入成本
+  5. 输出结构化建议（含 CREATE/DROP INDEX）
+
+cot_steps:
+  - "确认 WHERE / JOIN / ORDER BY 列与现有索引匹配情况"
+  - "对照 I001-I012 识别缺失、冗余、前缀不当等问题"
+  - "生成 CREATE INDEX / DROP INDEX DDL"
+  - "说明预期收益与回滚方式"
+  - "输出 JSON 格式索引建议"
+
+output_schema:
+  type: object
+  required: [findings, ddl_suggestions, summary]
+  properties:
+    findings:
+      type: array
+      items:
+        type: object
+        properties:
+          rule_id: {type: string}
+          level: {type: string, enum: [CRITICAL, WARNING, INFO]}
+          issue: {type: string}
+          suggestion: {type: string}
+    ddl_suggestions:
+      type: array
+      items: {type: string}
+    summary: {type: string}

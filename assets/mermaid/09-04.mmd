@@ -1,0 +1,15 @@
+flowchart LR
+    subgraph S1["① 感知与分类"]
+        direction TB
+        A["输入：数据库响应慢"] --> B["InputRouter 分类<br/>INSTANCE 层<br/>confidence=0.85"]
+        B --> C["MetricsAgent 采集<br/>连接数 180/200<br/>慢查询率 5.2%<br/>锁等待 2.3s"]
+    end
+    subgraph S2["② 交叉与推理"]
+        direction TB
+        D["CrossCorrelator 交叉判断<br/>CC01：连接×锁<br/>→ 锁阻塞导致连接堆积"] --> E["RootCauseAgent 推理<br/>根因：RC02 锁等待<br/>验证：SHOW ENGINE INNODB STATUS"]
+    end
+    subgraph S3["③ 定位与建议"]
+        direction TB
+        F["发现 Top 慢 SQL<br/>UPDATE orders SET status=2<br/>WHERE order_id=10001"] --> G["ExplainAgent 分析<br/>发现行锁竞争<br/>建议：缩短事务 / 分批更新"]
+    end
+    S1 --> S2 --> S3

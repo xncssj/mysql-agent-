@@ -1,0 +1,17 @@
+flowchart LR
+    subgraph P1["① 推理与交叉关联"]
+        direction TB
+        A["RootCauseAgent.diagnose()<br/>因果图推理 → root_causes"] --> B["CrossCorrelator.analyze()<br/>14 模式匹配 → cross_hits"]
+        B --> C["检查 cross_hits：命中 → 提取根因 ID<br/>匹配 root_causes 后加权 +0.3<br/>未命中 → 保持原排序"]
+    end
+
+    subgraph P2["② 重排与输出"]
+        direction TB
+        G["重新排序<br/>按加权后 score 降序"] --> H["输出：排序后的 root_causes<br/>+ cross_correlations 信息"]
+    end
+
+    P1 --> P2
+
+    style A fill:#e3f2fd,stroke:#1565c0
+    style B fill:#fff3e0,stroke:#ef6c00
+    style H fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px

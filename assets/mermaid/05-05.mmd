@@ -1,0 +1,16 @@
+flowchart TD
+    D["诊断描述<br/>用户输入"]:::input --> R{"关键词路由"}:::step
+    R -->|慢查询 / slow| S1["慢查询诊断 SQL<br/>AVG_TIMER_WAIT > 1s"]:::output
+    R -->|全表扫描 / table scan| S2["全表扫描诊断 SQL<br/>sys.statements_with_full_table_scans"]:::output
+    R -->|锁 / lock| S3["锁等待诊断 SQL<br/>metadata_locks"]:::output
+    R -->|其他| S4["通用诊断 SQL<br/>按执行时间排序 TOP 10"]:::output
+
+    style D fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style R fill:#fff3e0,stroke:#ef6c00
+    style S1 fill:#e8f5e9,stroke:#2e7d32
+    style S2 fill:#e8f5e9,stroke:#2e7d32
+    style S3 fill:#e8f5e9,stroke:#2e7d32
+    style S4 fill:#e8f5e9,stroke:#2e7d32
+    classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef step fill:#fff3e0,stroke:#ef6c00
+    classDef output fill:#e8f5e9,stroke:#2e7d32

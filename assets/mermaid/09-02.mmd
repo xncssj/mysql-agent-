@@ -1,0 +1,17 @@
+flowchart TD
+    Input["用户输入"] --> Router["InputRouter\n分类输入类型"]
+    Router --> SQLPath["SQL 层路径"]
+    Router --> InstPath["实例层/混合路径"]
+    SQLPath --> SQLAgent["SQL Agent 组\nNL2SQL + EXPLAIN + Index"]
+    InstPath --> InstAgent["Instance Agent 组\nMetrics + RootCause"]
+    SQLAgent --> Merge["结果汇总"]
+    InstAgent --> Merge
+    Merge --> Decision{"是否需要深入?"}
+    Decision -->|"SQL 层发现实例问题"| Upgrade["升级到实例层"]
+    Decision -->|"实例层发现慢 SQL"| Downgrade["下调 SQL Agent"]
+    Decision -->|"问题已定位"| Done["输出诊断报告"]
+
+    style Router fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style SQLAgent fill:#e8f5e9,stroke:#2e7d32
+    style InstAgent fill:#fff3e0,stroke:#ef6c00
+    style Done fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px

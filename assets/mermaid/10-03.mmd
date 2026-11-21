@@ -1,0 +1,25 @@
+flowchart TB
+    subgraph P1["① 采集"]
+        direction LR
+        A["MetricsAnalysisAgent.run()"] --> B["PrometheusCollector 拉取 8 项指标"]
+    end
+
+    subgraph P2["② 逐指标循环检测"]
+        direction LR
+        C["遍历每个指标"] --> D["AnomalyDetector 4 种算法并行"] --> E["NoiseFilter 降噪"]
+        E --> F{"还有更多指标?"}
+        F -->|"是，继续下一个"| C
+    end
+
+    subgraph P3["③ 汇总输出"]
+        direction LR
+        G["汇总异常事件"] --> H["输出诊断报告<br/>scan_time + anomalies + summary"]
+    end
+
+    P1 ==> P2
+    P2 ==>|"否"| P3
+
+    style A fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style D fill:#fff3e0,stroke:#ef6c00
+    style E fill:#e8f5e9,stroke:#2e7d32
+    style H fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px

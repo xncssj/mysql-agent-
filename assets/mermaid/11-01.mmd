@@ -1,0 +1,38 @@
+flowchart LR
+    subgraph 根因层
+        RC1["RC01 缺失索引"]
+        RC2["RC02 死锁"]
+        RC3["RC03 BP过小"]
+    end
+
+    subgraph 中间层
+        INT1["全表扫描"]
+        INT2["锁阻塞"]
+        INT3["BP淘汰频繁"]
+    end
+
+    subgraph 症状层
+        SYM1["慢查询增多"]
+        SYM2["锁等待"]
+        SYM3["连接数高"]
+        SYM4["BP命中率低"]
+    end
+
+    RC1 -->|"0.9"| INT1
+    RC2 -->|"0.95"| INT2
+    RC3 -->|"0.85"| INT3
+    INT1 -->|"0.85"| SYM1
+    INT2 -->|"0.9"| SYM2
+    INT2 -->|"0.8"| SYM3
+    INT3 -->|"0.7"| SYM4
+
+    style RC1 fill:#ffcdd2,stroke:#c62828
+    style RC2 fill:#ffcdd2,stroke:#c62828
+    style RC3 fill:#ffcdd2,stroke:#c62828
+    style INT1 fill:#e3f2fd,stroke:#1565c0
+    style INT2 fill:#e3f2fd,stroke:#1565c0
+    style INT3 fill:#e3f2fd,stroke:#1565c0
+    style SYM1 fill:#fff3e0,stroke:#ef6c00
+    style SYM2 fill:#fff3e0,stroke:#ef6c00
+    style SYM3 fill:#fff3e0,stroke:#ef6c00
+    style SYM4 fill:#fff3e0,stroke:#ef6c00
